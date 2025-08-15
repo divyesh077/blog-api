@@ -1,4 +1,6 @@
 import express, { Request, Response, NextFunction } from "express";
+import { env } from "../../config/env";
+
 const router = express.Router();
 
 router.get("/", (req: Request, res: Response, next: NextFunction) => {
@@ -8,7 +10,7 @@ router.get("/", (req: Request, res: Response, next: NextFunction) => {
     uptime: process.uptime().toFixed(0) + " seconds",
     timestamp: new Date().toISOString(),
     version: "1.0.0",
-    environment: process.env.NODE_ENV || "development",
+    environment: env.NODE_ENV,
   });
 });
 
