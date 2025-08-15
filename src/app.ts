@@ -4,6 +4,7 @@ import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
 import { limiter } from "./middleware/rateLimit";
+import { errorConverter, errorHandler } from "./middleware/error";
 
 // Init the application.
 const app = express();
@@ -24,5 +25,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // API Routing for v1
 app.use("/api/v1", v1Router);
+
+// Global Error Handler
+app.use(errorConverter);
+app.use(errorHandler);
 
 export { app };
