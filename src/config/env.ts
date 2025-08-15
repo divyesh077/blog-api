@@ -3,15 +3,19 @@ import z from "zod";
 
 dotenv.config();
 
-enum NodeEnv {
+export enum NodeEnv {
   DEVELOPMENT = "development",
   PRODUCTION = "production",
   TEST = "test",
 }
 
+enum LogLevel {
+  INFO = "info",
+}
 const envSchemaZ = z.object({
   NODE_ENV: z.enum(NodeEnv).default(NodeEnv.DEVELOPMENT),
   PORT: z.coerce.number().default(3000),
+  LEVEL: z.enum(LogLevel).default(LogLevel.INFO),
 });
 
 type IEnv = z.infer<typeof envSchemaZ>;
