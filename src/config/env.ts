@@ -16,6 +16,7 @@ const envSchemaZ = z.object({
   NODE_ENV: z.enum(NodeEnv).default(NodeEnv.DEVELOPMENT),
   PORT: z.coerce.number().default(3000),
   LEVEL: z.enum(LogLevel).default(LogLevel.INFO),
+  MONGO_URI: z.string().nonempty(),
 });
 
 type IEnv = z.infer<typeof envSchemaZ>;
