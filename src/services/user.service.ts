@@ -61,7 +61,9 @@ const getUserByEmail = async (email: string) => {
 
 const updateUserById = async (userId: string, userDetails: IUser) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(userId, userDetails);
+    const updatedUser = await User.findByIdAndUpdate(userId, userDetails, {
+      new: true,
+    });
     if (!updatedUser)
       throw new NotFoundError(`user not found with userId : ${userId}`);
     return updatedUser;
