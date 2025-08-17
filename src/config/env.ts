@@ -17,6 +17,14 @@ const envSchemaZ = z.object({
   PORT: z.coerce.number().default(3000),
   LEVEL: z.enum(LogLevel).default(LogLevel.INFO),
   MONGO_URI: z.string().nonempty(),
+  ACCESS_TOKEN_SECRET: z.string().nonempty(),
+  REFRESH_TOKEN_SECRET: z.string().nonempty(),
+  VERIFY_EMAIL_TOKEN_SECRET: z.string().nonempty(),
+  RESET_PASSWORD_TOKEN_SECRET: z.string().nonempty(),
+  ACCESS_TOKEN_EXPIRES_IN: z.string().default("10m"),
+  REFRESH_TOKEN_EXPIRES_IN: z.string().default("1d"),
+  VERIFY_EMAIL_TOKEN_EXPIRES_IN: z.string().default("10m"),
+  RESET_PASSWORD_TOKEN_EXPIRES_IN: z.string().default("10m"),
 });
 
 type IEnv = z.infer<typeof envSchemaZ>;
