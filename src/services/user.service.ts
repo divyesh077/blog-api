@@ -1,3 +1,4 @@
+import { Schema } from "mongoose";
 import { logger } from "../lib/logger";
 import { User } from "../models/user.model";
 import { IUser, UserRole } from "../schemas/user.schema";
@@ -33,7 +34,7 @@ const getUsers = async () => {
   }
 };
 
-const getUserById = async (userId: string) => {
+const getUserById = async (userId: string | Schema.Types.ObjectId) => {
   try {
     const user = await User.findById(userId);
     if (!user) throw new NotFoundError(`user not found with email : ${userId}`);
