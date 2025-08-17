@@ -1,4 +1,5 @@
 import jwt, { JwtPayload, Secret, SignOptions } from "jsonwebtoken";
+import { IJwtPayload } from "../schemas/token.schema";
 
 /**
  * Sign a JWT token
@@ -7,7 +8,7 @@ import jwt, { JwtPayload, Secret, SignOptions } from "jsonwebtoken";
  * @param expiresIn - Expiration time (e.g., "1h", "7d")
  */
 export const signToken = (
-  payload: object | string | Buffer,
+  payload: IJwtPayload,
   secret: Secret,
   expiresIn: SignOptions["expiresIn"]
 ): string => {
@@ -21,13 +22,13 @@ export const signToken = (
  * @param secret - Secret key
  * @returns JwtPayload if valid
  */
-export const verifyToken = (token: string, secret: Secret): JwtPayload => {
+export const verifyToken = (token: string, secret: Secret): IJwtPayload => {
   try {
     const decoded = jwt.verify(token, secret);
     if (typeof decoded === "string") {
       throw new Error("Invalid token payload type");
     }
-    return decoded; // ✅ This is JwtPayload
+    return decoded as IJwtPayload; // ✅ This is JwtPayload
   } catch (error) {
     throw new Error("Token verification failed");
   }
