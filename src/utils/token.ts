@@ -1,5 +1,6 @@
 import jwt, { JwtPayload, Secret, SignOptions } from "jsonwebtoken";
 import { IJwtPayload } from "../schemas/token.schema";
+import { BadRequestError } from "./errors/BadRequestError";
 
 /**
  * Sign a JWT token
@@ -26,10 +27,10 @@ export const verifyToken = (token: string, secret: Secret): IJwtPayload => {
   try {
     const decoded = jwt.verify(token, secret);
     if (typeof decoded === "string") {
-      throw new Error("Invalid token payload type");
+      throw new BadRequestError("Invalid token payload type");
     }
     return decoded as IJwtPayload; // ✅ This is JwtPayload
   } catch (error) {
-    throw new Error("Token verification failed");
+    throw error;
   }
 };
