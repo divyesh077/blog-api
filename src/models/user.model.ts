@@ -1,12 +1,13 @@
-import mongoose from "mongoose";
-import z from "zod";
+import mongoose, { Model } from "mongoose";
 
 import bcrypt from "bcryptjs";
 
 import { IUser, UserRole } from "../schemas/user.schema";
 
 export interface IUserDoc extends IUser, mongoose.Document {}
-
+export interface IUserModel extends Model<IUserDoc> {
+  isEmailTaken(email: string): Promise<boolean>;
+}
 const userSchema = new mongoose.Schema<IUserDoc>(
   {
     username: {
@@ -25,7 +26,7 @@ const userSchema = new mongoose.Schema<IUserDoc>(
     },
     roles: {
       type: String,
-      enum: [UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.USER],
+      enum: Object.values(UserRole),
       default: UserRole.USER,
     },
   },
@@ -54,4 +55,5 @@ userSchema.statics.isEmailTaken = async function (email: string) {
   const user = await this.findOne({ email });
   return !!user;
 };
-export const User = mongoose.model<IUserDoc>("User", userSchema);
+
+export const User = mongoose.model<IUserDoc, IUserModel>("User", userSchema);
