@@ -1,4 +1,4 @@
-import jwt, { JwtPayload, Secret, SignOptions } from "jsonwebtoken";
+import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import { IJwtPayload } from "../schemas/token.schema";
 import { BadRequestError } from "./errors/BadRequestError";
 
