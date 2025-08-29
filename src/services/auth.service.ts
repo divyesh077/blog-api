@@ -17,7 +17,7 @@ const signup = async (
   username: string,
   email: string,
   password: string,
-  roles: UserRole
+  roles: UserRole = UserRole.USER
 ) => {
   try {
     const isEmailExist = await User.isEmailTaken(email);
