@@ -37,7 +37,8 @@ const getUsers = async () => {
 const getUserById = async (userId: string | Schema.Types.ObjectId) => {
   try {
     const user = await User.findById(userId);
-    if (!user) throw new NotFoundError(`user not found with email : ${userId}`);
+    if (!user)
+      throw new NotFoundError(`user not found with userId : ${userId}`);
     return user;
   } catch (error) {
     logger.error(
