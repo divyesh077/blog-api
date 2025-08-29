@@ -1,4 +1,7 @@
+import { JwtPayload } from "jsonwebtoken";
+import { Schema } from "mongoose";
 import z from "zod";
+import { UserRole } from "./user.schema";
 
 export enum TokenType {
   "REFRESH" = "refresh",
@@ -12,3 +15,7 @@ export const TokenSchemaZ = z.object({
 });
 
 export type IToken = z.infer<typeof TokenSchemaZ>;
+export interface IJwtPayload extends JwtPayload {
+  userId: Schema.Types.ObjectId;
+  role: UserRole;
+}
