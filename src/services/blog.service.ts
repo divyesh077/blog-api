@@ -51,6 +51,8 @@ const updateBlogById = async (blogId: string, blogDetails: IBlog) => {
     const updatedBlog = await Blog.findByIdAndUpdate(blogId, blogDetails, {
       new: true,
     });
+    if (!updatedBlog)
+      throw new NotFoundError(`Blog not found with blogId ; ${blogId}`);
     return updatedBlog;
   } catch (error) {
     logger.error(
@@ -63,6 +65,8 @@ const updateBlogById = async (blogId: string, blogDetails: IBlog) => {
 const deleteBlogById = async (blogId: string) => {
   try {
     const deletedBlog = await Blog.findByIdAndDelete(blogId);
+    if (!deletedBlog)
+      throw new NotFoundError(`Blog not found with blogId ; ${blogId}`);
     return deletedBlog;
   } catch (error) {
     logger.error(
