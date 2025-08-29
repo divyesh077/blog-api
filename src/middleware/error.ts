@@ -16,7 +16,7 @@ export const errorConverter = (
   }
 
   let statusCode = 500;
-  let message = "Internal server error...";
+  let message = error.message || "Internal server error...";
 
   const errorName = error.name;
 
@@ -35,7 +35,7 @@ export const errorConverter = (
       break;
     default:
       statusCode = 500;
-      message = "Internal server error...";
+      message = error.message || "Internal server error...";
       break;
   }
 

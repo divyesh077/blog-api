@@ -3,6 +3,8 @@ import v1Router from "./routes/v1";
 import helmet from "helmet";
 import cors from "cors";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
+
 import { limiter } from "./middleware/rateLimit";
 import { errorConverter, errorHandler } from "./middleware/error";
 import { NotFound } from "./middleware/not-found";
@@ -23,6 +25,7 @@ app.use(morgan("dev"));
 // Parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // API Routing for v1
 app.use("/api/v1", v1Router);
