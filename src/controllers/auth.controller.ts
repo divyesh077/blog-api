@@ -2,14 +2,18 @@ import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 import authService from "../services/auth.service";
 import { env, NodeEnv } from "../config/env";
-import { BadRequestError } from "../utils/errors/BadRequestError";
 import { IUserDoc } from "../models/user.model";
-import { Schema } from "mongoose";
+import z from "zod";
+import { RegisterSchemaZ } from "../schemas/auth.schema";
 
 export const signup = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { username, email, password, role } = req.body;
-    const data = await authService.signup(username, email, password, role);
+  async (
+    req: Request<{}, {}, z.infer<typeof RegisterSchemaZ>, {}>,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const { username, email, password } = req.body;
+    const data = await authService.signup(username, email, password);
 
     res.cookie("accessToken", data.tokens.accessToken, {
       httpOnly: true, // prevent JavaScript access
