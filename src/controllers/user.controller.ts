@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 import userService from "../services/user.service";
-import { email } from "zod";
 import { IUser } from "../schemas/user.schema";
 
 export const getUsers = asyncHandler(
