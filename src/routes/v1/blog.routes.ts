@@ -8,7 +8,11 @@ import {
   updateBlogById,
 } from "../../controllers/blog.controller";
 import { validate } from "../../middleware/validate";
-import { BlogIdParamsSchema, BlogSchemaZ } from "../../schemas/blog.schema";
+import {
+  BlogIdParamsSchema,
+  BlogSchemaZ,
+  UpdateBlogSchemaZ,
+} from "../../schemas/blog.schema";
 
 const router = express.Router();
 
@@ -19,7 +23,7 @@ router.post("/", validate({ body: BlogSchemaZ }), createBlog);
 
 router.put(
   "/:blogId",
-  validate({ params: BlogIdParamsSchema, body: BlogSchemaZ.partial() }),
+  validate({ params: BlogIdParamsSchema, body: UpdateBlogSchemaZ }),
   updateBlogById
 );
 

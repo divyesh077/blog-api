@@ -6,6 +6,8 @@ export const BlogSchemaZ = z.object({
   uri: z.string().nonempty(),
 });
 
+export const UpdateBlogSchemaZ = BlogSchemaZ.partial(); // allow partial updates
+
 export const BlogIdParamsSchema = z.object({
   blogId: z.string().min(16),
 });
