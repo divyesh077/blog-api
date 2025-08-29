@@ -7,13 +7,15 @@ import {
   getBlogs,
   updateBlogById,
 } from "../../controllers/blog.controller";
+import { validate } from "../../middleware/validate";
+import { BlogSchemaZ } from "../../schemas/blog.schema";
 
 const router = express.Router();
 
 router.get("/", getBlogs);
 router.get("/:blogId", getBlogById);
 
-router.post("/", createBlog);
+router.post("/", validate({ body: BlogSchemaZ }), createBlog);
 
 router.put("/:blogId", updateBlogById);
 

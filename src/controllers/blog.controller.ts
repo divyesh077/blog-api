@@ -28,7 +28,7 @@ export const getBlogById = asyncHandler(
 );
 
 export const createBlog = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request<{}, {}, IBlog>, res: Response, next: NextFunction) => {
     const blog = req.body as IBlog;
     const createdBlog = await blogService.createBlog(blog);
     res.status(201).json({
