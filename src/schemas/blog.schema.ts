@@ -6,4 +6,8 @@ export const BlogSchemaZ = z.object({
   uri: z.string().nonempty(),
 });
 
+export const BlogIdParamsSchema = z.object({
+  blogId: z.string().min(16),
+});
+
 export type IBlog = z.infer<typeof BlogSchemaZ>;

@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
 
 import blogService from "../services/blog.service";
-import { IBlog } from "../schemas/blog.schema";
+import { BlogIdParamsSchema, IBlog } from "../schemas/blog.schema";
+import z from "zod";
 
 export const getBlogs = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -16,7 +17,11 @@ export const getBlogs = asyncHandler(
 );
 
 export const getBlogById = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (
+    req: Request<z.infer<typeof BlogIdParamsSchema>, {}, {}, {}>,
+    res: Response,
+    next: NextFunction
+  ) => {
     const { blogId } = req.params;
     const blogs = await blogService.getBlogById(blogId);
     res.status(200).json({
@@ -40,7 +45,11 @@ export const createBlog = asyncHandler(
 );
 
 export const updateBlogById = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (
+    req: Request<z.infer<typeof BlogIdParamsSchema>, {}, Partial<IBlog>, {}>,
+    res: Response,
+    next: NextFunction
+  ) => {
     const { blogId } = req.params;
     const blog = req.body as IBlog;
     const updatedBlog = await blogService.updateBlogById(blogId, blog);
@@ -53,7 +62,11 @@ export const updateBlogById = asyncHandler(
 );
 
 export const deleteBlogById = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (
+    req: Request<z.infer<typeof BlogIdParamsSchema>, {}, {}, {}>,
+    res: Response,
+    next: NextFunction
+  ) => {
     const { blogId } = req.params;
     await blogService.deleteBlogById(blogId);
     res.status(200).json({
@@ -66,8 +79,6 @@ export const deleteBlogById = asyncHandler(
 
 export const deleteBlogs = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { blogId } = req.params;
-    const blog = req.body as IBlog;
     const deletedBlogDetails = await blogService.deleteBlogs();
     res.status(200).json({
       success: true,
